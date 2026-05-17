@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useCallback } from "react";
-import html2canvas from "html2canvas";
+import { toPng } from "html-to-image";
 import type { AnalysisResult } from "@/lib/schema";
 import OverviewCard from "./OverviewCard";
 import RadarChart from "./RadarChart";
@@ -26,16 +26,14 @@ export default function ReportCard({ data, playlistName, onReset }: ReportCardPr
     if (!reportRef.current) return;
 
     try {
-      const canvas = await html2canvas(reportRef.current, {
+      const dataUrl = await toPng(reportRef.current, {
         backgroundColor: "#0a0b14",
-        scale: 2,
-        useCORS: true,
-        logging: false,
+        pixelRatio: 2,
       });
 
       const link = document.createElement("a");
       link.download = `灵魂唱片店-${playlistName || "报告"}.png`;
-      link.href = canvas.toDataURL("image/png");
+      link.href = dataUrl;
       link.click();
     } catch (err) {
       console.error("Failed to save image:", err);
