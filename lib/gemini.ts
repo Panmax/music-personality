@@ -168,6 +168,8 @@ export async function analyzePlaylist(
     console.log(`[Gemini] 完成 耗时=${elapsed}s 输入tokens=${usage?.promptTokenCount ?? "?"} 输出tokens=${usage?.candidatesTokenCount ?? "?"} 总tokens=${usage?.totalTokenCount ?? "?"}`);
 
     const text = response.text ?? "";
+    console.log(`[Gemini] 原始输出:\n${text}`);
+
     const data = AnalysisResultSchema.parse(JSON.parse(text));
 
     // Clean tags: keep only short strings starting with #
