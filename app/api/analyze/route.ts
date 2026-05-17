@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "歌曲列表为空" }, { status: 400 });
     }
 
-    const songsToAnalyze = songs.slice(0, 200);
+    const songsToAnalyze = songs.slice(0, 500);
     const result = await analyzePlaylist(playlist, songsToAnalyze);
     return NextResponse.json(result);
   } catch (err) {
