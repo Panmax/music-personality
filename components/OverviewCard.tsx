@@ -69,17 +69,17 @@ export default function OverviewCard({ overview }: OverviewCardProps) {
         className="grid grid-cols-3 gap-4 mt-10"
       >
         {[
-          { label: "曲目", value: stats.songCount, suffix: "首" },
-          { label: "艺术家", value: stats.artistCount, suffix: "位" },
-          { label: "年代跨度", value: stats.yearSpan, suffix: "" },
+          { label: "曲目", value: String(stats.songCount), suffix: "首", isText: false },
+          { label: "艺术家", value: String(stats.artistCount), suffix: "位", isText: false },
+          { label: "年代跨度", value: stats.yearSpan, suffix: "", isText: true },
         ].map((stat, i) => (
           <div
             key={stat.label}
-            className="card-glass rounded-xl p-4 text-center animate-fade-in-up"
+            className="card-glass rounded-xl p-4 text-center animate-fade-in-up flex flex-col justify-center"
             style={{ animationDelay: `${0.1 + i * 0.1}s` }}
           >
             <p
-              className="text-2xl sm:text-3xl font-bold mb-1"
+              className={`font-bold mb-1 ${stat.isText ? "text-sm sm:text-base" : "text-2xl sm:text-3xl"}`}
               style={{
                 color: "var(--accent-gold)",
                 fontFamily: "var(--font-display, 'Playfair Display', Georgia, serif)",

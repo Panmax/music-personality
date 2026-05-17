@@ -22,7 +22,7 @@ ${songList}
     "stats": {
       "songCount": 歌曲总数(number),
       "artistCount": 不重复歌手数(number),
-      "yearSpan": "跨越的年代描述，如'从90年代到2020年代'"
+      "yearSpan": "简短的年代跨度，不超过10个字，如'80年代~2020年代'"
     }
   },
   "musicDna": [
