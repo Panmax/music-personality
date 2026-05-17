@@ -31,6 +31,25 @@ export const SoulSongSchema = z.object({
   reason: z.string(),
 });
 
+export const MbtiSchema = z.object({
+  type: z.string(),
+  title: z.string(),
+  description: z.string(),
+  evidence: z.array(z.string()).min(2).max(4),
+});
+
+export const HobbySchema = z.object({
+  name: z.string(),
+  confidence: z.number().min(0).max(100),
+  reason: z.string(),
+});
+
+export const ChatGuideSchema = z.object({
+  dos: z.array(z.string()).min(2).max(4),
+  donts: z.array(z.string()).min(2).max(4),
+  icebreakers: z.array(z.string()).min(2).max(3),
+});
+
 export const AnalysisResultSchema = z.object({
   overview: z.object({
     summary: z.string(),
@@ -43,6 +62,9 @@ export const AnalysisResultSchema = z.object({
   musicDna: z.array(DnaDimensionSchema).length(5),
   emotionSpectrum: z.array(EmotionSchema).min(3).max(8),
   soulPlaylist: z.array(SoulSongSchema).min(3).max(5),
+  mbti: MbtiSchema,
+  hobbies: z.array(HobbySchema).min(3).max(6),
+  chatGuide: ChatGuideSchema,
   innerVoice: z.string(),
   tags: z.array(z.string()).min(3).max(5),
 });
@@ -53,3 +75,6 @@ export type AnalysisResult = z.infer<typeof AnalysisResultSchema>;
 export type DnaDimension = z.infer<typeof DnaDimensionSchema>;
 export type Emotion = z.infer<typeof EmotionSchema>;
 export type SoulSong = z.infer<typeof SoulSongSchema>;
+export type Mbti = z.infer<typeof MbtiSchema>;
+export type Hobby = z.infer<typeof HobbySchema>;
+export type ChatGuide = z.infer<typeof ChatGuideSchema>;

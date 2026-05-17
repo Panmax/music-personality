@@ -7,6 +7,9 @@ import OverviewCard from "./OverviewCard";
 import RadarChart from "./RadarChart";
 import EmotionSpectrum from "./EmotionSpectrum";
 import SoulPlaylist from "./SoulPlaylist";
+import MbtiCard from "./MbtiCard";
+import HobbiesCard from "./HobbiesCard";
+import ChatGuideCard from "./ChatGuideCard";
 import InnerVoice from "./InnerVoice";
 import TagCloud from "./TagCloud";
 
@@ -115,6 +118,27 @@ export default function ReportCard({ data, playlistName, onReset }: ReportCardPr
           />
 
           <SoulPlaylist songs={data.soulPlaylist} />
+
+          <div
+            className="w-full h-[1px]"
+            style={{ background: "linear-gradient(to right, transparent, var(--border-subtle), transparent)" }}
+          />
+
+          <MbtiCard mbti={data.mbti} />
+
+          <div
+            className="w-full h-[1px]"
+            style={{ background: "linear-gradient(to right, transparent, var(--border-subtle), transparent)" }}
+          />
+
+          <HobbiesCard hobbies={data.hobbies} />
+
+          <div
+            className="w-full h-[1px]"
+            style={{ background: "linear-gradient(to right, transparent, var(--border-subtle), transparent)" }}
+          />
+
+          <ChatGuideCard chatGuide={data.chatGuide} />
 
           <div
             className="w-full h-[1px]"
