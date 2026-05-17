@@ -39,7 +39,7 @@ export default function EmotionSpectrum({ emotions }: EmotionSpectrumProps) {
         <div className="flex flex-col sm:flex-row items-center gap-6">
           {/* Donut chart */}
           <div className="w-48 h-48 flex-shrink-0">
-            <ResponsiveContainer width="100%" height="100%">
+            <ResponsiveContainer width="100%" height="100%" minWidth={150} minHeight={150}>
               <PieChart>
                 <Pie
                   data={data}

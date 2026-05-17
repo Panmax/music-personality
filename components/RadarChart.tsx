@@ -40,7 +40,7 @@ export default function RadarChart({ dimensions }: RadarChartProps) {
       {/* Chart */}
       <div className="card-glass rounded-2xl p-6 mb-6">
         <div className="w-full" style={{ height: 320 }}>
-          <ResponsiveContainer width="100%" height="100%">
+          <ResponsiveContainer width="100%" height="100%" minWidth={200} minHeight={200}>
             <RechartsRadarChart data={data} cx="50%" cy="50%" outerRadius="72%">
               <PolarGrid
                 stroke="var(--border-subtle)"
