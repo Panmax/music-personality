@@ -107,7 +107,7 @@ export default function Home() {
       <p className="text-red-400 text-lg mb-4">{state.message}</p>
       <button
         onClick={handleReset}
-        className="px-6 py-3 bg-[#d4a574] text-[#1a1520] rounded-xl font-medium hover:bg-[#e8c87a] transition-colors"
+        className="px-6 py-3 bg-[#d4a574] text-[#0a0b14] rounded-xl font-medium hover:bg-[#e8c87a] transition-colors"
       >
         重试
       </button>

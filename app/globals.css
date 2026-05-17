@@ -1,25 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  /* === Warm Vinyl Palette === */
-  --bg-deep: #1a1520;
-  --bg-card: #241e2b;
-  --bg-card-hover: #2e2736;
-  --bg-surface: #2a2333;
+  /* === Cosmic Vinyl Palette === */
+  --bg-deep: #0a0b14;
+  --bg-card: #12131f;
+  --bg-card-hover: #181a2a;
+  --bg-surface: #1a1c2e;
 
-  --text-primary: #f0ece6;
-  --text-secondary: #b5afa5;
-  --text-muted: #7a756e;
+  --text-primary: #e8e4dc;
+  --text-secondary: #9b978e;
+  --text-muted: #5c5a54;
 
   --accent-gold: #d4a574;
   --accent-gold-light: #e8c87a;
-  --accent-gold-dim: #a07d54;
+  --accent-gold-dim: #8b6f4e;
   --accent-warm: #c4725a;
   --accent-teal: #5a9b8f;
-  --accent-slate: #8b94ad;
+  --accent-slate: #6b7a99;
 
-  --border-subtle: rgba(212, 165, 116, 0.15);
-  --border-glow: rgba(212, 165, 116, 0.3);
+  --border-subtle: rgba(212, 165, 116, 0.12);
+  --border-glow: rgba(212, 165, 116, 0.25);
 
   --background: var(--bg-deep);
   --foreground: var(--text-primary);
@@ -143,8 +143,8 @@ body::before {
 .card-glass {
   background: linear-gradient(
     135deg,
-    rgba(36, 30, 43, 0.95) 0%,
-    rgba(42, 35, 51, 0.8) 100%
+    rgba(18, 19, 31, 0.9) 0%,
+    rgba(26, 28, 46, 0.7) 100%
   );
   border: 1px solid var(--border-subtle);
   backdrop-filter: blur(12px);

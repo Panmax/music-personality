@@ -24,7 +24,7 @@ export default function ReportCard({ data, playlistName, onReset }: ReportCardPr
 
     try {
       const canvas = await html2canvas(reportRef.current, {
-        backgroundColor: "#1a1520",
+        backgroundColor: "#0a0b14",
         scale: 2,
         useCORS: true,
         logging: false,
