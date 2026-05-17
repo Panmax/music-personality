@@ -108,7 +108,7 @@ const RESPONSE_JSON_SCHEMA = {
       type: "array",
       minItems: 3,
       maxItems: 5,
-      items: { type: "string" },
+      items: { type: "string", description: "以#开头的短标签，不超过10个字，如'#深夜emo专业户'" },
     },
   },
 } as const;
@@ -137,7 +137,7 @@ ${songList}
 - hobbies 的 reason 必须引用具体歌曲
 - chatGuide 的建议要基于歌单反映出的性格特征
 - innerVoice 要基于歌单中的具体歌曲来描绘内心世界
-- tags 带#号，如"#深夜emo专业户"
+- tags 每个标签必须以#开头，不超过10个字，只包含中文和字母，如"#深夜emo专业户"。绝对不要在标签中包含任何解释、注释或思考过程
 - 语言有温度，有金句感，适合截图分享`;
 }
 
