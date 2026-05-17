@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 
 interface InputFormProps {
   onSubmit: (input: string) => void;
@@ -9,6 +10,7 @@ interface InputFormProps {
 
 export default function InputForm({ onSubmit, loading }: InputFormProps) {
   const [value, setValue] = useState("");
+  const [showGuide, setShowGuide] = useState(false);
   const canSubmit = value.trim().length > 0 && !loading;
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -125,13 +127,64 @@ export default function InputForm({ onSubmit, loading }: InputFormProps) {
         </form>
 
         {/* Hint */}
-        <p
-          className="mt-6 text-xs text-center opacity-60"
-          style={{ color: "var(--text-muted)" }}
+        <button
+          type="button"
+          onClick={() => setShowGuide(true)}
+          className="mt-6 text-xs text-center transition-colors duration-200 cursor-pointer"
+          style={{ color: "var(--text-muted)", opacity: 0.6, background: "none", border: "none" }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "var(--accent-gold)";
+            e.currentTarget.style.opacity = "1";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "var(--text-muted)";
+            e.currentTarget.style.opacity = "0.6";
+          }}
         >
-          支持网易云歌单链接 / 163cn.tv 短链 / 歌单ID
-        </p>
+          如何获取歌单链接？
+        </button>
       </div>
+
+      {/* Guide modal */}
+      {showGuide && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "rgba(0, 0, 0, 0.85)" }}
+          onClick={() => setShowGuide(false)}
+        >
+          <div
+            className="relative max-w-sm w-full flex flex-col items-center gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p
+              className="text-sm text-center"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              在网易云音乐 App 中，打开歌单 → 点击「分享」→ 选择「复制链接」
+            </p>
+            <div className="w-full rounded-xl overflow-hidden">
+              <Image
+                src="/guide.png"
+                alt="获取歌单链接步骤"
+                width={300}
+                height={650}
+                className="w-full h-auto"
+              />
+            </div>
+            <button
+              onClick={() => setShowGuide(false)}
+              className="px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer"
+              style={{
+                background: "var(--bg-surface)",
+                color: "var(--text-secondary)",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              知道了
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
