@@ -160,24 +160,18 @@ export async function analyzePlaylist(
       },
     });
 
-    // Extract non-thinking text from response parts directly
-    const parts = response.candidates?.[0]?.content?.parts ?? [];
-    const outputText = parts
-      .filter((part: { thought?: boolean; text?: string }) => !part.thought && typeof part.text === "string")
-      .map((part: { text?: string }) => part.text)
-      .join("");
+    const text = response.text ?? "";
+    const data = AnalysisResultSchema.parse(JSON.parse(text));
 
-    let parsed: unknown;
-    try {
-      parsed = JSON.parse(outputText);
-    } catch {
-      // Fallback: extract JSON substring if thinking text leaked into output
-      const start = outputText.indexOf("{");
-      const end = outputText.lastIndexOf("}");
-      if (start === -1 || end <= start) throw new Error("No JSON found in response");
-      parsed = JSON.parse(outputText.slice(start, end + 1));
+    // Clean tags: keep only short strings starting with #
+    data.tags = data.tags
+      .map((t) => t.match(/#[^\s#'"]{1,20}/)?.[0])
+      .filter((t): t is string => !!t);
+    if (data.tags.length < 3) {
+      data.tags = ["#音乐灵魂", "#歌单解读", "#品味密码"];
     }
-    return AnalysisResultSchema.parse(parsed);
+
+    return data;
   };
 
   try {
