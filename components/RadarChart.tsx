@@ -6,7 +6,6 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  ResponsiveContainer,
 } from "recharts";
 import type { DnaDimension } from "@/lib/schema";
 
@@ -38,38 +37,34 @@ export default function RadarChart({ dimensions }: RadarChartProps) {
       </div>
 
       {/* Chart */}
-      <div className="card-glass rounded-2xl p-6 mb-6">
-        <div className="w-full" style={{ height: 320 }}>
-          <ResponsiveContainer width="100%" height="100%" minWidth={200} minHeight={200}>
-            <RechartsRadarChart data={data} cx="50%" cy="50%" outerRadius="72%">
-              <PolarGrid
-                stroke="var(--border-subtle)"
-                strokeWidth={0.5}
-              />
-              <PolarAngleAxis
-                dataKey="subject"
-                tick={{
-                  fill: "var(--text-secondary)",
-                  fontSize: 13,
-                }}
-              />
-              <PolarRadiusAxis
-                angle={90}
-                domain={[0, 100]}
-                tick={false}
-                axisLine={false}
-              />
-              <Radar
-                name="DNA"
-                dataKey="score"
-                stroke="var(--accent-gold)"
-                fill="var(--accent-gold)"
-                fillOpacity={0.15}
-                strokeWidth={2}
-              />
-            </RechartsRadarChart>
-          </ResponsiveContainer>
-        </div>
+      <div className="card-glass rounded-2xl p-6 mb-6 flex justify-center">
+        <RechartsRadarChart data={data} width={340} height={300} cx="50%" cy="50%" outerRadius="72%">
+          <PolarGrid
+            stroke="var(--border-subtle)"
+            strokeWidth={0.5}
+          />
+          <PolarAngleAxis
+            dataKey="subject"
+            tick={{
+              fill: "var(--text-secondary)",
+              fontSize: 13,
+            }}
+          />
+          <PolarRadiusAxis
+            angle={90}
+            domain={[0, 100]}
+            tick={false}
+            axisLine={false}
+          />
+          <Radar
+            name="DNA"
+            dataKey="score"
+            stroke="var(--accent-gold)"
+            fill="var(--accent-gold)"
+            fillOpacity={0.15}
+            strokeWidth={2}
+          />
+        </RechartsRadarChart>
       </div>
 
       {/* Dimension descriptions */}

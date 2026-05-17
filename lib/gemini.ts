@@ -1,4 +1,4 @@
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, ThinkingLevel } from "@google/genai";
 import { AnalysisResultSchema, type AnalysisResult, type Song } from "./schema";
 
 const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
@@ -153,7 +153,7 @@ export async function analyzePlaylist(
       contents: prompt,
       config: {
         thinkingConfig: {
-          thinkingLevel: "MEDIUM",
+          thinkingLevel: ThinkingLevel.MEDIUM,
         },
         responseMimeType: "application/json",
         responseJsonSchema: RESPONSE_JSON_SCHEMA,

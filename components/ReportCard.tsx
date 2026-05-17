@@ -23,6 +23,7 @@ export default function ReportCard({ data, playlistName, onReset }: ReportCardPr
   const reportRef = useRef<HTMLDivElement>(null);
 
   const [saving, setSaving] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const handleSaveImage = useCallback(async () => {
     if (!reportRef.current || saving) return;
@@ -38,15 +39,19 @@ export default function ReportCard({ data, playlistName, onReset }: ReportCardPr
         },
       });
 
+      // Try auto-download
       const link = document.createElement("a");
       link.download = `灵魂唱片店-${playlistName || "报告"}.png`;
       link.href = dataUrl;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      // Also show preview modal (fallback for blocked downloads)
+      setPreviewUrl(dataUrl);
     } catch (err) {
       console.error("Failed to save image:", err);
-      alert("保存失败，请尝试截图保存");
+      alert("生成图片失败，请尝试截图保存");
     } finally {
       setSaving(false);
     }
@@ -219,6 +224,47 @@ export default function ReportCard({ data, playlistName, onReset }: ReportCardPr
           再测一个
         </button>
       </div>
+
+      {/* Image preview modal */}
+      {previewUrl && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: "rgba(0, 0, 0, 0.85)" }}
+          onClick={() => setPreviewUrl(null)}
+        >
+          <div
+            className="relative max-w-lg w-full max-h-[90vh] flex flex-col items-center gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <p
+              className="text-sm text-center"
+              style={{ color: "var(--text-secondary)" }}
+            >
+              如果下载被拦截，可长按图片保存 / 右键另存为
+            </p>
+            <div className="w-full max-h-[75vh] overflow-y-auto rounded-xl">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={previewUrl}
+                alt="分析报告长图"
+                className="w-full"
+                style={{ display: "block" }}
+              />
+            </div>
+            <button
+              onClick={() => setPreviewUrl(null)}
+              className="px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer"
+              style={{
+                background: "var(--bg-surface)",
+                color: "var(--text-secondary)",
+                border: "1px solid var(--border-subtle)",
+              }}
+            >
+              关闭
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

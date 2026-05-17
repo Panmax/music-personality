@@ -4,7 +4,6 @@ import {
   PieChart,
   Pie,
   Cell,
-  ResponsiveContainer,
 } from "recharts";
 import type { Emotion } from "@/lib/schema";
 
@@ -38,25 +37,23 @@ export default function EmotionSpectrum({ emotions }: EmotionSpectrumProps) {
       <div className="card-glass rounded-2xl p-6">
         <div className="flex flex-col sm:flex-row items-center gap-6">
           {/* Donut chart */}
-          <div className="w-48 h-48 flex-shrink-0">
-            <ResponsiveContainer width="100%" height="100%" minWidth={150} minHeight={150}>
-              <PieChart>
-                <Pie
-                  data={data}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
-                  paddingAngle={3}
-                  dataKey="value"
-                  stroke="none"
-                >
-                  {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-              </PieChart>
-            </ResponsiveContainer>
+          <div className="flex-shrink-0">
+            <PieChart width={192} height={192}>
+              <Pie
+                data={data}
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={80}
+                paddingAngle={3}
+                dataKey="value"
+                stroke="none"
+              >
+                {data.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={entry.color} />
+                ))}
+              </Pie>
+            </PieChart>
           </div>
 
           {/* Legend */}
