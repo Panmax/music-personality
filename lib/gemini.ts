@@ -160,11 +160,23 @@ export async function analyzePlaylist(
       },
     });
 
-    const text = response.text ?? "";
-    // Extract the first valid JSON object, ignoring any thinking text
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error("No JSON found in response");
-    const parsed = JSON.parse(jsonMatch[0]);
+    // Extract non-thinking text from response parts directly
+    const parts = response.candidates?.[0]?.content?.parts ?? [];
+    const outputText = parts
+      .filter((part: { thought?: boolean; text?: string }) => !part.thought && typeof part.text === "string")
+      .map((part: { text?: string }) => part.text)
+      .join("");
+
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(outputText);
+    } catch {
+      // Fallback: extract JSON substring if thinking text leaked into output
+      const start = outputText.indexOf("{");
+      const end = outputText.lastIndexOf("}");
+      if (start === -1 || end <= start) throw new Error("No JSON found in response");
+      parsed = JSON.parse(outputText.slice(start, end + 1));
+    }
     return AnalysisResultSchema.parse(parsed);
   };
 
