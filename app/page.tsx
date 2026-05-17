@@ -63,6 +63,8 @@ export default function Home() {
         return;
       }
 
+      analyzeData.overview.stats.songCount = playlistData.total;
+
       setState({
         phase: "done",
         playlistName: playlistData.playlist,
