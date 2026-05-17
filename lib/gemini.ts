@@ -5,7 +5,8 @@ const genai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY! });
 
 const RESPONSE_JSON_SCHEMA = {
   type: "object",
-  required: ["overview", "musicDna", "emotionSpectrum", "soulPlaylist", "mbti", "hobbies", "chatGuide", "innerVoice", "tags"],
+  required: ["overview", "musicDna", "emotionSpectrum", "soulPlaylist", "mbti", "hobbies", "chatGuide", "tags", "innerVoice"],
+  propertyOrdering: ["overview", "musicDna", "emotionSpectrum", "soulPlaylist", "mbti", "hobbies", "chatGuide", "tags", "innerVoice"],
   properties: {
     overview: {
       type: "object",
@@ -103,13 +104,13 @@ const RESPONSE_JSON_SCHEMA = {
         icebreakers: { type: "array", minItems: 2, maxItems: 3, items: { type: "string" } },
       },
     },
-    innerVoice: { type: "string", description: "以第二人称'你'写的诗意内心独白，150-250字" },
     tags: {
       type: "array",
       minItems: 3,
       maxItems: 5,
       items: { type: "string", description: "以#开头的短标签，不超过10个字，如'#深夜emo专业户'" },
     },
+    innerVoice: { type: "string", description: "以第二人称'你'写的诗意内心独白，150-250字。这是JSON的最后一个字段。" },
   },
 } as const;
 
@@ -141,6 +142,23 @@ ${songList}
 - 语言有温度，有金句感，适合截图分享`;
 }
 
+function parseJsonRobust(text: string): unknown {
+  try {
+    return JSON.parse(text);
+  } catch {
+    // Thinking text appended after JSON — find the top-level closing brace
+    const start = text.indexOf("{");
+    if (start === -1) throw new Error("No JSON found in response");
+    let depth = 0;
+    for (let i = start; i < text.length; i++) {
+      if (text[i] === "{") depth++;
+      else if (text[i] === "}") depth--;
+      if (depth === 0) return JSON.parse(text.slice(start, i + 1));
+    }
+    throw new Error("Incomplete JSON in response");
+  }
+}
+
 export async function analyzePlaylist(
   playlistName: string,
   songs: Song[]
@@ -170,11 +188,10 @@ export async function analyzePlaylist(
     const text = response.text ?? "";
     console.log(`[Gemini] 原始输出:\n${text}`);
 
-    const data = AnalysisResultSchema.parse(JSON.parse(text));
+    const data = AnalysisResultSchema.parse(parseJsonRobust(text));
 
-    // Clean tags: keep only short strings starting with #
     data.tags = data.tags
-      .map((t) => t.match(/#[^\s#'"]{1,20}/)?.[0])
+      .map((t) => t.match(/#[^\s#'"}{]{1,10}/)?.[0])
       .filter((t): t is string => !!t);
     if (data.tags.length < 3) {
       data.tags = ["#音乐灵魂", "#歌单解读", "#品味密码"];
