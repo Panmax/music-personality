@@ -156,6 +156,29 @@ export default function InputForm({ onSubmit, loading }: InputFormProps) {
             className="relative max-w-sm w-full flex flex-col items-center gap-4"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Close button */}
+            <button
+              onClick={() => setShowGuide(false)}
+              className="absolute -top-2 -right-2 z-10 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-200"
+              style={{
+                background: "var(--bg-surface)",
+                color: "var(--text-secondary)",
+                border: "1px solid var(--border-subtle)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "var(--border-glow)";
+                e.currentTarget.style.color = "var(--text-primary)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "var(--border-subtle)";
+                e.currentTarget.style.color = "var(--text-secondary)";
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <path d="M1 1l12 12M13 1L1 13" />
+              </svg>
+            </button>
+
             <p
               className="text-sm text-center"
               style={{ color: "var(--text-secondary)" }}
@@ -166,8 +189,8 @@ export default function InputForm({ onSubmit, loading }: InputFormProps) {
               <Image
                 src="/guide.png"
                 alt="获取歌单链接步骤"
-                width={300}
-                height={650}
+                width={720}
+                height={1560}
                 className="w-full h-auto"
               />
             </div>

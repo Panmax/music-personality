@@ -8,7 +8,9 @@
 
 在网易云音乐 App 中，打开歌单页面，点击「分享」按钮，选择「复制链接」，然后粘贴到输入框即可。
 
-<img src="public/guide.png" width="300" alt="获取歌单链接步骤" />
+<p align="center">
+  <img src="public/guide.png" width="300" alt="获取歌单链接步骤" />
+</p>
 
 ## 功能
 
