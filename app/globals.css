@@ -1,8 +1,28 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* === Cosmic Vinyl Palette === */
+  --bg-deep: #0a0b14;
+  --bg-card: #12131f;
+  --bg-card-hover: #181a2a;
+  --bg-surface: #1a1c2e;
+
+  --text-primary: #e8e4dc;
+  --text-secondary: #9b978e;
+  --text-muted: #5c5a54;
+
+  --accent-gold: #d4a574;
+  --accent-gold-light: #e8c87a;
+  --accent-gold-dim: #8b6f4e;
+  --accent-warm: #c4725a;
+  --accent-teal: #5a9b8f;
+  --accent-slate: #6b7a99;
+
+  --border-subtle: rgba(212, 165, 116, 0.12);
+  --border-glow: rgba(212, 165, 116, 0.25);
+
+  --background: var(--bg-deep);
+  --foreground: var(--text-primary);
 }
 
 @theme inline {
@@ -12,15 +32,136 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-body, "Noto Serif SC", "Georgia", serif);
+}
+
+/* === Noise Grain Overlay === */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* === Entrance Animations === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease-out both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out both;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+.delay-700 { animation-delay: 0.7s; }
+.delay-800 { animation-delay: 0.8s; }
+
+/* === Gold shimmer text === */
+.text-shimmer {
+  background: linear-gradient(
+    120deg,
+    var(--accent-gold-dim) 0%,
+    var(--accent-gold-light) 40%,
+    var(--accent-gold) 60%,
+    var(--accent-gold-dim) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s infinite linear;
+}
+
+/* === Card glass style === */
+.card-glass {
+  background: linear-gradient(
+    135deg,
+    rgba(18, 19, 31, 0.9) 0%,
+    rgba(26, 28, 46, 0.7) 100%
+  );
+  border: 1px solid var(--border-subtle);
+  backdrop-filter: blur(12px);
+}
+
+.card-glass:hover {
+  border-color: var(--border-glow);
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent-gold-dim);
+  border-radius: 3px;
 }
