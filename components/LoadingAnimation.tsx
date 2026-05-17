@@ -16,8 +16,17 @@ const analyzeMessages = [
   "正在分析你的音乐基因...",
   "正在扫描情感光谱...",
   "正在解码品味密码...",
+  "正在推算你的 MBTI 人格...",
+  "正在从旋律中猜测你的爱好...",
+  "正在绘制音乐 DNA 雷达图...",
+  "正在编写聊天攻略...",
+  "正在挑选你的灵魂歌单...",
   "正在绘制灵魂画像...",
+  "正在为你寻找破冰话题...",
   "正在撰写内心独白...",
+  "正在生成趣味标签...",
+  "马上就好，再等一小会儿...",
+  "好的灵魂解读需要一点时间...",
 ];
 
 export default function LoadingAnimation({ phase, playlistInfo }: LoadingAnimationProps) {
@@ -31,7 +40,7 @@ export default function LoadingAnimation({ phase, playlistInfo }: LoadingAnimati
   useEffect(() => {
     const interval = setInterval(() => {
       setMessageIndex((prev) => (prev + 1) % messages.length);
-    }, 2000);
+    }, 3000);
     return () => clearInterval(interval);
   }, [messages.length]);
 
