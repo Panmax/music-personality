@@ -161,7 +161,10 @@ export async function analyzePlaylist(
     });
 
     const text = response.text ?? "";
-    const parsed = JSON.parse(text);
+    // Extract the first valid JSON object, ignoring any thinking text
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error("No JSON found in response");
+    const parsed = JSON.parse(jsonMatch[0]);
     return AnalysisResultSchema.parse(parsed);
   };
 
