@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useCallback } from "react";
-import { toPng } from "html-to-image";
+import { useRef, useCallback, useState } from "react";
+import { domToPng } from "modern-screenshot";
 import type { AnalysisResult } from "@/lib/schema";
 import OverviewCard from "./OverviewCard";
 import RadarChart from "./RadarChart";
@@ -22,23 +22,35 @@ interface ReportCardProps {
 export default function ReportCard({ data, playlistName, onReset }: ReportCardProps) {
   const reportRef = useRef<HTMLDivElement>(null);
 
+  const [saving, setSaving] = useState(false);
+
   const handleSaveImage = useCallback(async () => {
-    if (!reportRef.current) return;
+    if (!reportRef.current || saving) return;
+    setSaving(true);
 
     try {
-      const dataUrl = await toPng(reportRef.current, {
+      const dataUrl = await domToPng(reportRef.current, {
         backgroundColor: "#0a0b14",
-        pixelRatio: 2,
+        scale: 2,
+        fetch: {
+          requestInit: { mode: "cors", cache: "force-cache" },
+          bypassingCache: false,
+        },
       });
 
       const link = document.createElement("a");
       link.download = `灵魂唱片店-${playlistName || "报告"}.png`;
       link.href = dataUrl;
+      document.body.appendChild(link);
       link.click();
+      document.body.removeChild(link);
     } catch (err) {
       console.error("Failed to save image:", err);
+      alert("保存失败，请尝试截图保存");
+    } finally {
+      setSaving(false);
     }
-  }, [playlistName]);
+  }, [playlistName, saving]);
 
   return (
     <div className="min-h-screen px-4 py-12 sm:px-6 relative">
@@ -184,7 +196,7 @@ export default function ReportCard({ data, playlistName, onReset }: ReportCardPr
             e.currentTarget.style.transform = "translateY(0)";
           }}
         >
-          保存长图
+          {saving ? "正在生成..." : "保存长图"}
         </button>
 
         <button
