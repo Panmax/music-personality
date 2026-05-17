@@ -25,6 +25,8 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    console.log(`[分析] 歌单="${name}" ID=${playlistId} 歌曲=${songs.length}`);
+
     return NextResponse.json({
       playlist: name,
       total: songs.length,
