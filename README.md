@@ -1,36 +1,55 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 灵魂唱片店
 
-## Getting Started
+通过网易云音乐歌单分析你的性格、品味与内心世界。
 
-First, run the development server:
+**在线体验：https://musicsoul.jiapan.me**
+
+## 功能
+
+- 粘贴网易云音乐歌单链接，AI 生成完整的音乐人格分析报告
+- 支持多种输入格式：歌单链接、163cn.tv 短链、App 分享文本、纯数字 ID
+- 分析维度：
+  - 灵魂画像 — 一句话概括你的音乐人格
+  - 音乐 DNA — 五维雷达图（怀旧/浪漫/叛逆/文艺/治愈）
+  - 情感光谱 — 情绪分布环形图
+  - 灵魂歌单 — 最能代表你的 3-5 首歌
+  - MBTI 推测 — 基于歌单推断人格类型
+  - 爱好猜测 — 从音乐品味推断兴趣爱好
+  - 聊天攻略 — 如何与你聊天的建议
+  - 内心独白 — 诗意的第二人称灵魂解读
+  - 趣味标签 — 适合分享的个性标签
+- 保存长图，方便分享到社交平台
+
+## 技术栈
+
+- **Next.js** (App Router) + **Tailwind CSS**
+- **Gemini 3.1 Pro** — AI 分析引擎，结构化 JSON 输出
+- **Recharts** — 雷达图、环形图可视化
+- **modern-screenshot** — 长图导出
+- 部署于 **Vercel**
+
+## 本地开发
 
 ```bash
+# 安装依赖
+npm install
+
+# 配置环境变量
+cp .env.local.example .env.local
+# 编辑 .env.local，填入你的 Gemini API Key
+
+# 启动开发服务器
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+打开 http://localhost:3000 即可使用。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 环境变量
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| 变量名 | 说明 |
+|--------|------|
+| `GEMINI_API_KEY` | Google Gemini API 密钥 |
 
-## Learn More
+## 部署
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+推送到 GitHub 后，在 Vercel 导入仓库，设置 `GEMINI_API_KEY` 环境变量，即可自动部署。每次 push 到 master 分支会触发自动构建。
