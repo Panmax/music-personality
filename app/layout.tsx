@@ -29,7 +29,7 @@ export default function RootLayout({
       lang="zh-CN"
       className={`${playfair.variable} ${notoSansSC.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0a0b14]">
+      <body className="min-h-full flex flex-col bg-[#1a1520]">
         {children}
       </body>
     </html>
