@@ -70,8 +70,13 @@ export async function analyzePlaylist(
 
   const doRequest = async (): Promise<AnalysisResult> => {
     const response = await genai.models.generateContent({
-      model: "gemini-2.5-pro",
+      model: "gemini-3.1-pro-preview",
       contents: prompt,
+      config: {
+        thinkingConfig: {
+          thinkingLevel: "MEDIUM",
+        },
+      },
     });
 
     const text = response.text ?? "";
