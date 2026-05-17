@@ -39,15 +39,6 @@ export default function ReportCard({ data, playlistName, onReset }: ReportCardPr
         },
       });
 
-      // Try auto-download
-      const link = document.createElement("a");
-      link.download = `灵魂唱片店-${playlistName || "报告"}.png`;
-      link.href = dataUrl;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-
-      // Also show preview modal (fallback for blocked downloads)
       setPreviewUrl(dataUrl);
     } catch (err) {
       console.error("Failed to save image:", err);
