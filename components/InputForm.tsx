@@ -9,6 +9,7 @@ interface InputFormProps {
 
 export default function InputForm({ onSubmit, loading }: InputFormProps) {
   const [value, setValue] = useState("");
+  const canSubmit = value.trim().length > 0 && !loading;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -97,24 +98,25 @@ export default function InputForm({ onSubmit, loading }: InputFormProps) {
 
           <button
             type="submit"
-            disabled={loading || !value.trim()}
-            className="w-full py-4 rounded-xl text-base font-semibold tracking-wide transition-all duration-300 cursor-pointer disabled:cursor-not-allowed disabled:opacity-40"
+            className="w-full py-4 rounded-xl text-base font-semibold tracking-wide transition-all duration-300"
             style={{
-              background: loading
-                ? "var(--bg-surface)"
-                : "linear-gradient(135deg, var(--accent-gold-dim) 0%, var(--accent-gold) 100%)",
-              color: loading ? "var(--text-muted)" : "var(--bg-deep)",
+              background: canSubmit
+                ? "linear-gradient(135deg, #c9965a 0%, #e8c87a 50%, #d4a574 100%)"
+                : "var(--bg-surface)",
+              color: canSubmit ? "#0a0b14" : "var(--text-muted)",
               border: "none",
-              boxShadow: loading ? "none" : "0 4px 24px rgba(212, 165, 116, 0.2)",
+              opacity: canSubmit ? 1 : 0.4,
+              cursor: canSubmit ? "pointer" : "not-allowed",
+              boxShadow: canSubmit ? "0 4px 24px rgba(232, 200, 122, 0.35)" : "none",
             }}
             onMouseEnter={(e) => {
-              if (!loading) {
+              if (canSubmit) {
                 e.currentTarget.style.boxShadow = "0 6px 32px rgba(212, 165, 116, 0.35)";
                 e.currentTarget.style.transform = "translateY(-1px)";
               }
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = loading ? "none" : "0 4px 24px rgba(212, 165, 116, 0.2)";
+              e.currentTarget.style.boxShadow = canSubmit ? "0 4px 24px rgba(232, 200, 122, 0.35)" : "none";
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
