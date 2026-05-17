@@ -152,33 +152,7 @@ export default function InputForm({ onSubmit, loading }: InputFormProps) {
           style={{ background: "rgba(0, 0, 0, 0.85)" }}
           onClick={() => setShowGuide(false)}
         >
-          <div
-            className="relative max-w-sm w-full flex flex-col items-center gap-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
-            <button
-              onClick={() => setShowGuide(false)}
-              className="absolute -top-2 -right-2 z-10 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-200"
-              style={{
-                background: "var(--bg-surface)",
-                color: "var(--text-secondary)",
-                border: "1px solid var(--border-subtle)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-glow)";
-                e.currentTarget.style.color = "var(--text-primary)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = "var(--border-subtle)";
-                e.currentTarget.style.color = "var(--text-secondary)";
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <path d="M1 1l12 12M13 1L1 13" />
-              </svg>
-            </button>
-
+          <div className="max-w-sm w-full flex flex-col items-center gap-4">
             <p
               className="text-sm text-center"
               style={{ color: "var(--text-secondary)" }}
@@ -194,17 +168,12 @@ export default function InputForm({ onSubmit, loading }: InputFormProps) {
                 className="w-full h-auto"
               />
             </div>
-            <button
-              onClick={() => setShowGuide(false)}
-              className="px-6 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 cursor-pointer"
-              style={{
-                background: "var(--bg-surface)",
-                color: "var(--text-secondary)",
-                border: "1px solid var(--border-subtle)",
-              }}
+            <p
+              className="text-xs"
+              style={{ color: "var(--text-muted)", opacity: 0.5 }}
             >
-              知道了
-            </button>
+              点击任意位置关闭
+            </p>
           </div>
         </div>
       )}
