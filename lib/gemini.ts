@@ -148,6 +148,9 @@ export async function analyzePlaylist(
   const prompt = buildPrompt(playlistName, songs);
 
   const doRequest = async (): Promise<AnalysisResult> => {
+    const start = Date.now();
+    console.log(`[Gemini] 开始分析 歌单="${playlistName}" 歌曲=${songs.length}`);
+
     const response = await genai.models.generateContent({
       model: "gemini-3.1-pro-preview",
       contents: prompt,
@@ -159,6 +162,10 @@ export async function analyzePlaylist(
         responseJsonSchema: RESPONSE_JSON_SCHEMA,
       },
     });
+
+    const elapsed = ((Date.now() - start) / 1000).toFixed(1);
+    const usage = response.usageMetadata;
+    console.log(`[Gemini] 完成 耗时=${elapsed}s 输入tokens=${usage?.promptTokenCount ?? "?"} 输出tokens=${usage?.candidatesTokenCount ?? "?"} 总tokens=${usage?.totalTokenCount ?? "?"}`);
 
     const text = response.text ?? "";
     const data = AnalysisResultSchema.parse(JSON.parse(text));
