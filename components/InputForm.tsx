@@ -103,7 +103,7 @@ export default function InputForm({ onSubmit, loading }: InputFormProps) {
               background: canSubmit
                 ? "linear-gradient(135deg, #c9965a 0%, #e8c87a 50%, #d4a574 100%)"
                 : "var(--bg-surface)",
-              color: canSubmit ? "#0a0b14" : "var(--text-muted)",
+              color: canSubmit ? "var(--bg-deep)" : "var(--text-muted)",
               border: "none",
               opacity: canSubmit ? 1 : 0.4,
               cursor: canSubmit ? "pointer" : "not-allowed",
